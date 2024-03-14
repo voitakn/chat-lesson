@@ -18,21 +18,21 @@ func main() {
 	var err error
 	dbUser, err = os.OpenFile("./data/users.txt",
 		os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+	defer dbUser.Close()
 	if err != nil {
 		log.Panic("Error open file users.txt: " + err.Error())
 		return
 	}
-	defer dbUser.Close()
 
 	// Data for messages
 	dbMessage, err = os.OpenFile("./data/messages.txt",
 		os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+	defer dbMessage.Close()
 	if err != nil {
 		log.Panic("Error open file messages.txt: " + err.Error())
 		return
 	}
-	defer dbMessage.Close()
-
+	
 	readAllUsers()
 
 	go handleMessages()
