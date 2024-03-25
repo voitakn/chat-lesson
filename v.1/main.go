@@ -32,7 +32,7 @@ func main() {
 		log.Panic("Error open file messages.txt: " + err.Error())
 		return
 	}
-	
+
 	readAllUsers()
 
 	go handleMessages()
