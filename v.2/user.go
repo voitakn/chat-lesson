@@ -2,6 +2,10 @@ package main
 
 import (
 	"bufio"
+	"chat-lesson/internal/model"
+	"chat-lesson/internal/repository/person"
+	"chat-lesson/pkg/pgdb"
+	"context"
 	"crypto/sha1"
 	"encoding/hex"
 	"encoding/json"
@@ -54,6 +58,15 @@ func signIn(w http.ResponseWriter, r *http.Request) {
 		responseString(w, fmt.Sprintf(`{"success": false, "msg": "%v"}`, err.Error()))
 		return
 	}
+
+	repoPerson := person.New(pgdb.DB.Conn())
+	ctx := context.Background()
+	result, err := repoPerson.PersonCreate(ctx, model.PersonNew{
+		UserName: user.Name,
+	})
+
+	log.Println("signIn", result)
+
 	responseJson(w, userJson)
 }
 

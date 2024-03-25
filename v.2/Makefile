@@ -6,8 +6,6 @@ DB_USER:=postgres
 DB_PASSWORD:=qwerty12345
 DB_DATABASE:=chat_lesson
 
-PG_DSN:="postgres://postgres:qwerty12345@localhost:5401/chat_lesson?sslmode=disable"
-
 MIGRATION_DSN="host=${DB_HOST} port=${DB_PORT} dbname=${DB_DATABASE} user=${DB_USER} password=${DB_PASSWORD} sslmode=disable"
 
 MIGRATION_DIR=./migrations
@@ -17,7 +15,7 @@ install-deps:
 
 run:
 	DB_DSN="postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_DATABASE)?sslmode=disable" \
-	go run main.go
+	go run .
 
 migration-status:
 	$(LOCAL_BIN)/goose -dir ${MIGRATION_DIR} postgres ${MIGRATION_DSN} status -v

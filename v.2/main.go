@@ -1,6 +1,8 @@
 package main
 
 import (
+	"chat-lesson/pkg/pgdb"
+	"context"
 	"log"
 	"net/http"
 	"os"
@@ -14,6 +16,13 @@ var dbUser *os.File
 var dbMessage *os.File
 
 func main() {
+	ctx := context.Background()
+	DbConfig := os.Getenv("DB_DSN")
+
+	if err := pgdb.New(ctx, DbConfig); err != nil {
+		log.Fatal("@[main] can't init connection to PG: ", err)
+	}
+
 	// Data for users
 	var err error
 	dbUser, err = os.OpenFile("./data/users.txt",
