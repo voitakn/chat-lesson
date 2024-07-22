@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  pg-chat:
+    image: postgres:16.2-alpine
+    container_name: pg-chat
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5406:5432"
